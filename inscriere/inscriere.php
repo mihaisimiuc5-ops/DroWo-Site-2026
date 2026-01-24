@@ -1,4 +1,5 @@
 <?php
+
 require_once '../db.php';
 
 $mesaj = "";
@@ -39,19 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formular Înscriere</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { text-align: center; color: #333; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        .success { color: green; text-align: center; font-weight: bold; }
-        .error { color: red; text-align: center; font-weight: bold; }
-    </style>
+    <title>Formular Înscriere EUROAVIA</title>
+    <link rel="stylesheet" href="css/inscriere.css">
 </head>
 <body>
 
@@ -61,27 +51,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form method="POST" action="">
         <div class="form-group">
             <label>Nume</label>
-            <input type="text" name="nume" required>
+            <input type="text" name="nume" required placeholder="Ex: Popescu">
         </div>
         <div class="form-group">
             <label>Prenume</label>
-            <input type="text" name="prenume" required>
+            <input type="text" name="prenume" required placeholder="Ex: Andrei">
         </div>
         <div class="form-group">
             <label>Email</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" required placeholder="Ex: andrei@email.com">
         </div>
         <div class="form-group">
             <label>Număr Telefon</label>
-            <input type="tel" name="telefon" required>
+            <input type="tel" name="telefon" required placeholder="Ex: 0712345678">
         </div>
+        
         <div class="form-group">
             <label>Facultate</label>
-            <input type="text" name="facultate" required>
+            <select name="facultate" required>
+                <option value="" disabled selected>Selectează facultatea...</option>
+                <option value="Facultatea de Inginerie Electrică">Facultatea de Inginerie Electrică</option>
+                <option value="Facultatea de Energetică">Facultatea de Energetică</option>
+                <option value="Facultatea de Automatică și Calculatoare">Facultatea de Automatică și Calculatoare</option>
+                <option value="Facultatea de Electronică, Telecomunicații și Tehnologia Informației">Facultatea de Electronică, Telecomunicații și Tehnologia Informației</option>
+                <option value="Facultatea de Inginerie Mecanică și Mecatronică">Facultatea de Inginerie Mecanică și Mecatronică</option>
+                <option value="Facultatea de Ingineria și Managementul Sistemelor Tehnologice">Facultatea de Ingineria și Managementul Sistemelor Tehnologice</option>
+                <option value="Facultatea de Ingineria Sistemelor Biotehnice">Facultatea de Ingineria Sistemelor Biotehnice</option>
+                <option value="Facultatea de Transporturi din București">Facultatea de Transporturi din București</option>
+                <option value="Facultatea de Inginerie Aerospațială">Facultatea de Inginerie Aerospațială</option>
+                <option value="Facultatea de Știința și Ingineria Materialelor">Facultatea de Știința și Ingineria Materialelor</option>
+                <option value="Facultatea de Chimie Aplicată și Știința Materialelor">Facultatea de Chimie Aplicată și Știința Materialelor</option>
+                <option value="Facultatea de Inginerie cu predare în limbi străine">Facultatea de Inginerie cu predare în limbi străine</option>
+                <option value="Facultatea de Științe Aplicate">Facultatea de Științe Aplicate</option>
+                <option value="Facultatea de Inginerie Medicală">Facultatea de Inginerie Medicală</option>
+                <option value="Facultatea de Antreprenoriat, Ingineria și Managementul Afacerilor">Facultatea de Antreprenoriat, Ingineria și Managementul Afacerilor</option>
+            </select>
         </div>
+
         <div class="form-group">
             <label>Anul de studiu</label>
             <select name="an_studiu" required>
+                <option value="" disabled selected>Selectează anul de studiu...</option>
                 <option value="Licenta - Anul 1">Licență - Anul 1</option>
                 <option value="Licenta - Anul 2">Licență - Anul 2</option>
                 <option value="Licenta - Anul 3">Licență - Anul 3</option>
