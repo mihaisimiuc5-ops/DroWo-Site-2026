@@ -1,5 +1,5 @@
 
-body {
+body, label {
 
     cursor: url('../images/corsor.png'), auto;
 }
