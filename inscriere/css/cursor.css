@@ -1,0 +1,16 @@
+
+body {
+
+    cursor: url('../images/corsor.png'), auto;
+}
+
+
+button, select, input, a {
+
+    cursor: url('../images/corsor_pointer.png'), pointer;
+}
+
+
+input[type="text"], input[type="email"], input[type="tel"], p {
+    cursor: url('../images/corsor_pointer.png'), text;
+}
