@@ -134,7 +134,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="Licenta - Anul 4">Licență - Anul 4</option>
                 <option value="Masterat - Anul 1">Masterat - Anul 1</option>
                 <option value="Masterat - Anul 2">Masterat - Anul 2</option>
-                <option value="Doctorat">Doctorat</option>
             </select>
         </div>
 
