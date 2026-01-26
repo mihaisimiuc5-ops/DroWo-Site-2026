@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']) && isset($_POST[
         $stmt->execute([':status' => $status_nou, ':id' => $id]);
     }
     
-    // Refresh pagina
     header("Location: admin.php");
     exit();
 }
@@ -33,6 +32,24 @@ $in_asteptare = getCandidatesByStatus($pdo, 'in_asteptare');
 $confirmati = getCandidatesByStatus($pdo, 'confirmat');
 $esuati = getCandidatesByStatus($pdo, 'esuat');
 
+function formatEducatie($c) {
+    $html = "";
+    if ($c['is_student_upb'] == 1) {
+        $html .= "<strong>UPB:</strong> " . $c['facultate'];
+    } else {
+        $html .= "<strong>Extern:</strong> " . $c['universitate_externa'];
+    }
+    $html .= "<br><small>" . $c['an_studiu'] . "</small>";
+    return $html;
+}
+
+
+function formatEuroavia($c) {
+    if ($c['a_mai_participat'] == 1) {
+        return "<span style='color:green'>DA</span><br><small>" . $c['evenimente_anterioare'] . "</small>";
+    }
+    return "<span style='color:grey'>NU</span>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +58,12 @@ $esuati = getCandidatesByStatus($pdo, 'esuat');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panou Admin</title>
-<link rel="stylesheet" href="inscriere/css/admin.css">
+    <link rel="stylesheet" href="inscriere/css/admin.css">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; vertical-align: top; }
+        th { background-color: #333; color: white; }
+    </style>
 </head>
 <body>
 
@@ -51,18 +73,18 @@ $esuati = getCandidatesByStatus($pdo, 'esuat');
     <h2 style="color: #ff9800;">Noi Înscriși (Neverificați) - <?php echo count($neverificati); ?></h2>
     <table>
         <tr>
-            <th>Nume și Prenume</th>
-            <th>Email</th>
-            <th>Telefon</th>
-            <th>Facultate/An</th>
+            <th>Nume</th>
+            <th>Contact</th>
+            <th>Educație</th>
+            <th>Exp. EuroAvia</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($neverificati as $c) : ?>
         <tr>
             <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?></td>
-            <td><?php echo $c['telefon']; ?></td>
-            <td><?php echo $c['facultate'] . ' (' . $c['an_studiu'] . ')'; ?></td>
+            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo formatEducatie($c); ?></td>
+            <td><?php echo formatEuroavia($c); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
@@ -77,20 +99,21 @@ $esuati = getCandidatesByStatus($pdo, 'esuat');
 </div>
 
 <div class="sectiune">
-    <h2 style="color: #17a2b8;">Nu au răspuns / În așteptare - <?php echo count($in_asteptare); ?></h2>
+    <h2 style="color: #17a2b8;">În așteptare - <?php echo count($in_asteptare); ?></h2>
     <table>
         <tr>
-            <th>Nume și Prenume</th>
-            <th>Email</th>
-            <th>Telefon</th>
-            <th>Facultate/An</th>
+            <th>Nume</th>
+            <th>Contact</th>
+            <th>Educație</th>
+            <th>Exp. EuroAvia</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($in_asteptare as $c) : ?>
         <tr>
             <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?></td>
-            <td><?php echo $c['telefon']; ?></td> <td><?php echo $c['facultate'] . ' (' . $c['an_studiu'] . ')'; ?></td>
+            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo formatEducatie($c); ?></td>
+            <td><?php echo formatEuroavia($c); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
@@ -107,21 +130,23 @@ $esuati = getCandidatesByStatus($pdo, 'esuat');
     <h2 style="color: #28a745;">Confirmați - <?php echo count($confirmati); ?></h2>
     <table>
         <tr>
-            <th>Nume și Prenume</th>
-            <th>Email</th>
-            <th>Facultate/An</th>
+            <th>Nume</th>
+            <th>Contact</th>
+            <th>Educație</th>
+            <th>Exp. EuroAvia</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($confirmati as $c) : ?>
         <tr>
             <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?></td>
-            <td><?php echo $c['facultate'] . ' (' . $c['an_studiu'] . ')'; ?></td>
+            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo formatEducatie($c); ?></td>
+            <td><?php echo formatEuroavia($c); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
                     <button type="submit" name="actiune" value="asteapta" class="btn btn-blue">Mută la Nu a răspuns</button>
-                    <button type="submit" name="actiune" value="esueaza" class="btn btn-red">Mută la Respinși</button>
+                    <button type="submit" name="actiune" value="esueaza" class="btn btn-red">Respinge</button>
                 </form>
             </td>
         </tr>
@@ -130,24 +155,25 @@ $esuati = getCandidatesByStatus($pdo, 'esuat');
 </div>
 
 <div class="sectiune">
-    <h2 style="color: #dc3545;">Eșuați / Respinși - <?php echo count($esuati); ?></h2>
+    <h2 style="color: #dc3545;">Respinși - <?php echo count($esuati); ?></h2>
     <table>
         <tr>
-            <th>Nume și Prenume</th>
-            <th>Email</th>
-            <th>Facultate/An</th>
+            <th>Nume</th>
+            <th>Contact</th>
+            <th>Educație</th>
+            <th>Exp. EuroAvia</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($esuati as $c) : ?>
         <tr>
             <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?></td>
-            <td><?php echo $c['facultate'] . ' (' . $c['an_studiu'] . ')'; ?></td>
+            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo formatEducatie($c); ?></td>
+            <td><?php echo formatEuroavia($c); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
-                    <button type="submit" name="actiune" value="confirma" class="btn btn-green">Mută la Confirmați</button>
-                    <button type="submit" name="actiune" value="asteapta" class="btn btn-blue">Mută la Nu a răspuns</button>
+                    <button type="submit" name="actiune" value="confirma" class="btn btn-green">Reactivează</button>
                 </form>
             </td>
         </tr>
