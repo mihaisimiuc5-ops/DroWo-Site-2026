@@ -35,3 +35,18 @@ function toggleEuroavia() {
         inputEv.value = '';
     }
 }
+
+function toggleMembruEuroavia() {
+    const isMember = document.querySelector('input[name="membru_euroavia"]:checked').value === '1';
+    const divDept = document.getElementById('div_departament_euroavia');
+    const inputDept = document.getElementById('input_departament_euroavia');
+
+    if (isMember) {
+        divDept.classList.remove('hidden');
+        inputDept.setAttribute('required', 'required');
+    } else {
+        divDept.classList.add('hidden');
+        inputDept.removeAttribute('required'); 
+        inputDept.value = '';
+    }
+}

@@ -67,6 +67,12 @@ label {
     text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
 }
 
+strong {
+    font-weight: bold;
+    color: #ff00ff;
+    text-shadow: 0 0 5px rgba(255, 0, 255, 0.7);
+}
+
 input, select {
     width: 100%;
     padding: 12px;

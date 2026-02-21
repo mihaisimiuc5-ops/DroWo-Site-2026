@@ -18,11 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $a_mai_participat = isset($_POST['a_mai_participat']) && $_POST['a_mai_participat'] == '1' ? 1 : 0;
     $evenimente_anterioare = ($a_mai_participat) ? htmlspecialchars($_POST['evenimente_anterioare']) : "";
     
+    $cum_ai_aflat = htmlspecialchars($_POST['cum_ai_aflat']);
+    
+    $membru_euroavia = isset($_POST['membru_euroavia']) && $_POST['membru_euroavia'] == '1' ? 1 : 0;
+    $departament_euroavia = ($membru_euroavia) ? htmlspecialchars($_POST['departament_euroavia']) : "";
+
     $gdpr = isset($_POST['gdpr']) ? 'Da' : 'Nu';
 
     try {
-        $sql = "INSERT INTO candidati (nume, prenume, email, telefon, facultate, an_studiu, is_student_upb, universitate_externa, a_mai_participat, evenimente_anterioare, gdpr) 
-                VALUES (:nume, :prenume, :email, :telefon, :facultate, :an_studiu, :is_student_upb, :universitate_externa, :a_mai_participat, :evenimente_anterioare, :gdpr)";
+        $sql = "INSERT INTO candidati (nume, prenume, email, telefon, facultate, an_studiu, is_student_upb, universitate_externa, a_mai_participat, evenimente_anterioare, cum_ai_aflat, membru_euroavia, departament_euroavia, gdpr) 
+                VALUES (:nume, :prenume, :email, :telefon, :facultate, :an_studiu, :is_student_upb, :universitate_externa, :a_mai_participat, :evenimente_anterioare, :cum_ai_aflat, :membru_euroavia, :departament_euroavia, :gdpr)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':nume' => $nume,
@@ -35,6 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':universitate_externa' => $universitate_externa,
             ':a_mai_participat' => $a_mai_participat,
             ':evenimente_anterioare' => $evenimente_anterioare,
+            ':cum_ai_aflat' => $cum_ai_aflat,
+            ':membru_euroavia' => $membru_euroavia,
+            ':departament_euroavia' => $departament_euroavia,
             ':gdpr' => $gdpr
         ]);
         $mesaj = "<p class='success'>Înscriere realizată cu succes!</p>";
@@ -137,6 +145,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="Masterat - Anul 2">Masterat - Anul 2</option>
             </select>
         </div>
+        <div class="form-group">
+            <label>Ești membru în EUROAVIA București?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="membru_euroavia" value="1" onchange="toggleMembruEuroavia()"> Da</label>
+                <label><input type="radio" name="membru_euroavia" value="0" checked onchange="toggleMembruEuroavia()"> Nu</label>
+            </div>
+        </div>
+
+        <div class="form-group hidden" id="div_departament_euroavia">
+            <label class="sub-label">În ce departament ești?</label>
+            <select name="departament_euroavia" id="input_departament_euroavia">
+                <option value="" disabled selected>Selectează departamentul...</option>
+                <option value="Departamentul IT">Departamentul IT</option>
+                <option value="Departamentul Legal">Departamentul Legal</option>
+                <option value="Departamentul Events">Departamentul Events</option>
+                <option value="Departamentul Tehnic">Departamentul Tehnic</option>
+                <option value="Departamentul Marketing">Departamentul Marketing</option>
+                <option value="Departamentul Business Relations">Departamentul Business Relations</option>
+            </select>
+        </div>
+        
+         <div class="form-group">
+            <label>Cum ai aflat de <strong>DroneWorkshop 2026</strong>?</label>
+            <input type="text" name="cum_ai_aflat" required placeholder="Ex: Facebook, Instagram, prieteni...">
+        </div>
 
         <div class="form-group">
             <label>Ai mai participat la evenimente EuroAvia?</label>
@@ -150,6 +183,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label class="sub-label">La ce evenimente ai participat?</label>
             <input type="text" name="evenimente_anterioare" id="input_evenimente" placeholder="ex: evenimentul (AcWo) - anul (2025)">
         </div>
+
+       
+
 
         <div class="form-group gdpr-group">
             <p class="gdpr-text">Acest formular colectează date cu caracter personal. Datele vor fi stocate pe toată perioada funcționării asociației, cu clauze de trecere a informației de la echipă la echipă. Păstrarea datelor furnizate va fi în responsabilitatea departamentelor de IT și Legal.</p>
