@@ -181,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="form-group hidden" id="div_evenimente">
             <label class="sub-label">La ce evenimente ai participat?</label>
-            <input type="text" name="evenimente_anterioare" id="input_evenimente" placeholder="ex: evenimentul (AcWo) - anul (2025)">
+            <input type="text" name="evenimente_anterioare" id="input_evenimente" placeholder="Evenimentul - anul">
         </div>
 
        

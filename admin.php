@@ -35,18 +35,24 @@ $esuati = getCandidatesByStatus($pdo, 'esuat');
 function formatEducatie($c) {
     $html = "";
     if ($c['is_student_upb'] == 1) {
-        $html .= "<strong>UPB:</strong> " . $c['facultate'];
+        $html .= "<strong>UPB:</strong> " . htmlspecialchars($c['facultate']);
     } else {
-        $html .= "<strong>Extern:</strong> " . $c['universitate_externa'];
+        $html .= "<strong>Extern:</strong> " . htmlspecialchars($c['universitate_externa']);
     }
-    $html .= "<br><small>" . $c['an_studiu'] . "</small>";
+    $html .= "<br><small>" . htmlspecialchars($c['an_studiu']) . "</small>";
     return $html;
 }
 
-
 function formatEuroavia($c) {
     if ($c['a_mai_participat'] == 1) {
-        return "<span style='color:green'>DA</span><br><small>" . $c['evenimente_anterioare'] . "</small>";
+        return "<span style='color:green'>DA</span><br><small>" . htmlspecialchars($c['evenimente_anterioare']) . "</small>";
+    }
+    return "<span style='color:grey'>NU</span>";
+}
+
+function formatMembruEA($c) {
+    if (isset($c['membru_euroavia']) && $c['membru_euroavia'] == 1) {
+        return "<span style='color:#007bff; font-weight:bold;'>DA</span><br><small>" . htmlspecialchars($c['departament_euroavia']) . "</small>";
     }
     return "<span style='color:grey'>NU</span>";
 }
@@ -77,14 +83,18 @@ function formatEuroavia($c) {
             <th>Contact</th>
             <th>Educație</th>
             <th>Exp. EuroAvia</th>
+            <th>Membru EA</th>
+            <th>Cum a aflat</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($neverificati as $c) : ?>
         <tr>
-            <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo htmlspecialchars($c['nume'] . ' ' . $c['prenume']); ?></td>
+            <td><?php echo htmlspecialchars($c['email']); ?><br><?php echo htmlspecialchars($c['telefon']); ?></td>
             <td><?php echo formatEducatie($c); ?></td>
             <td><?php echo formatEuroavia($c); ?></td>
+            <td><?php echo formatMembruEA($c); ?></td>
+            <td><?php echo htmlspecialchars($c['cum_ai_aflat']); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
@@ -106,14 +116,18 @@ function formatEuroavia($c) {
             <th>Contact</th>
             <th>Educație</th>
             <th>Exp. EuroAvia</th>
+            <th>Membru EA</th>
+            <th>Cum a aflat</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($in_asteptare as $c) : ?>
         <tr>
-            <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo htmlspecialchars($c['nume'] . ' ' . $c['prenume']); ?></td>
+            <td><?php echo htmlspecialchars($c['email']); ?><br><?php echo htmlspecialchars($c['telefon']); ?></td>
             <td><?php echo formatEducatie($c); ?></td>
             <td><?php echo formatEuroavia($c); ?></td>
+            <td><?php echo formatMembruEA($c); ?></td>
+            <td><?php echo htmlspecialchars($c['cum_ai_aflat']); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
@@ -134,14 +148,18 @@ function formatEuroavia($c) {
             <th>Contact</th>
             <th>Educație</th>
             <th>Exp. EuroAvia</th>
+            <th>Membru EA</th>
+            <th>Cum a aflat</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($confirmati as $c) : ?>
         <tr>
-            <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo htmlspecialchars($c['nume'] . ' ' . $c['prenume']); ?></td>
+            <td><?php echo htmlspecialchars($c['email']); ?><br><?php echo htmlspecialchars($c['telefon']); ?></td>
             <td><?php echo formatEducatie($c); ?></td>
             <td><?php echo formatEuroavia($c); ?></td>
+            <td><?php echo formatMembruEA($c); ?></td>
+            <td><?php echo htmlspecialchars($c['cum_ai_aflat']); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
@@ -162,14 +180,18 @@ function formatEuroavia($c) {
             <th>Contact</th>
             <th>Educație</th>
             <th>Exp. EuroAvia</th>
+            <th>Membru EA</th>
+            <th>Cum a aflat</th>
             <th>Acțiune</th>
         </tr>
         <?php foreach ($esuati as $c) : ?>
         <tr>
-            <td><?php echo $c['nume'] . ' ' . $c['prenume']; ?></td>
-            <td><?php echo $c['email']; ?><br><?php echo $c['telefon']; ?></td>
+            <td><?php echo htmlspecialchars($c['nume'] . ' ' . $c['prenume']); ?></td>
+            <td><?php echo htmlspecialchars($c['email']); ?><br><?php echo htmlspecialchars($c['telefon']); ?></td>
             <td><?php echo formatEducatie($c); ?></td>
             <td><?php echo formatEuroavia($c); ?></td>
+            <td><?php echo formatMembruEA($c); ?></td>
+            <td><?php echo htmlspecialchars($c['cum_ai_aflat']); ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $c['id']; ?>">
