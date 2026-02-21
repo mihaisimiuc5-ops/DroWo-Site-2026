@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="form-group hidden" id="div_evenimente">
             <label class="sub-label">La ce evenimente ai participat?</label>
-            <input type="text" name="evenimente_anterioare" id="input_evenimente" placeholder="Ex: Rachetomodelism, Simulator Zbor...">
+            <input type="text" name="evenimente_anterioare" id="input_evenimente" placeholder="Ex: AcWo 2025, DroWo">
         </div>
 
         <div class="form-group gdpr-group">
