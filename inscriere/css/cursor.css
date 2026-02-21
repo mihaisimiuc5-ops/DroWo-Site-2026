@@ -1,16 +1,28 @@
 
-body, label {
-
-    cursor: url('../images/corsor.png'), auto;
+*, *::before, *::after {
+    cursor: url('../images/corsor.png'), auto !important;
 }
 
 
-button, select, input, a {
-
-    cursor: url('../images/corsor_pointer.png'), pointer;
+button, 
+select, 
+input[type="radio"], 
+input[type="checkbox"], 
+a, 
+label, 
+.checkbox-label, 
+.checkbox-label span,
+.radio-group label {
+    cursor: url('../images/corsor_pointer.png'), pointer !important;
 }
 
 
-input[type="text"], input[type="email"], input[type="tel"], p {
-    cursor: url('../images/corsor_pointer.png'), text;
+input[type="text"], 
+input[type="email"], 
+input[type="tel"], 
+p, 
+h2, 
+.gdpr-text,
+.sub-label {
+    cursor: url('../images/corsor_pointer.png'), text !important;
 }
