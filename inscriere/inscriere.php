@@ -11,17 +11,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefon = htmlspecialchars($_POST['telefon']);
     $an_studiu = htmlspecialchars($_POST['an_studiu']);
     
-    // Preluare date noi
     $is_student_upb = isset($_POST['is_student_upb']) && $_POST['is_student_upb'] == '1' ? 1 : 0;
     $facultate = ($is_student_upb) ? htmlspecialchars($_POST['facultate_upb']) : ""; 
     $universitate_externa = (!$is_student_upb) ? htmlspecialchars($_POST['universitate_externa']) : "";
 
     $a_mai_participat = isset($_POST['a_mai_participat']) && $_POST['a_mai_participat'] == '1' ? 1 : 0;
     $evenimente_anterioare = ($a_mai_participat) ? htmlspecialchars($_POST['evenimente_anterioare']) : "";
+    
+    $gdpr = isset($_POST['gdpr']) ? 'Da' : 'Nu';
 
     try {
-        $sql = "INSERT INTO candidati (nume, prenume, email, telefon, facultate, an_studiu, is_student_upb, universitate_externa, a_mai_participat, evenimente_anterioare) 
-                VALUES (:nume, :prenume, :email, :telefon, :facultate, :an_studiu, :is_student_upb, :universitate_externa, :a_mai_participat, :evenimente_anterioare)";
+        $sql = "INSERT INTO candidati (nume, prenume, email, telefon, facultate, an_studiu, is_student_upb, universitate_externa, a_mai_participat, evenimente_anterioare, gdpr) 
+                VALUES (:nume, :prenume, :email, :telefon, :facultate, :an_studiu, :is_student_upb, :universitate_externa, :a_mai_participat, :evenimente_anterioare, :gdpr)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':nume' => $nume,
@@ -33,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':is_student_upb' => $is_student_upb,
             ':universitate_externa' => $universitate_externa,
             ':a_mai_participat' => $a_mai_participat,
-            ':evenimente_anterioare' => $evenimente_anterioare
+            ':evenimente_anterioare' => $evenimente_anterioare,
+            ':gdpr' => $gdpr
         ]);
         $mesaj = "<p class='success'>Înscriere realizată cu succes!</p>";
     } catch (PDOException $e) {
@@ -58,11 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/inscriere.css">
     <link rel="stylesheet" href="css/cursor.css">
     <style>
-        /* Stiluri pentru ascunderea campurilor */
         .hidden { display: none; }
         .radio-group { display: flex; gap: 15px; margin-bottom: 10px; color: #fff; }
-        .radio-group label { font-weight: normal; cursor: pointer; }
-        .sub-label { font-size: 0.9em; color: #ccc; margin-bottom: 5px; display: block; }
+        .radio-group label { font-weight: normal; cursor: pointer; text-transform: none; letter-spacing: normal; text-shadow: none; }
+        .sub-label { font-size: 0.9em; color: #ccc; margin-bottom: 5px; display: block; text-transform: none; text-shadow: none; letter-spacing: normal;}
     </style>
 </head>
 <body>
@@ -150,13 +151,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="evenimente_anterioare" id="input_evenimente" placeholder="Ex: Rachetomodelism, Simulator Zbor...">
         </div>
 
+        <div class="form-group gdpr-group">
+            <p class="gdpr-text">Acest formular colectează date cu caracter personal. Datele vor fi stocate pe toată perioada funcționării asociației, cu clauze de trecere a informației de la echipă la echipă. Păstrarea datelor furnizate va fi în responsabilitatea departamentelor de IT și Legal.</p>
+            <label class="checkbox-label">
+                <input type="checkbox" name="gdpr" value="Da" required>
+                <span>Am citit și sunt de acord cu prelucrarea datelor furnizate în conformitate cu Regulamentul GDPR.</span>
+            </label>
+        </div>
+
         <button type="submit">Înscrie-te</button>
     </form>
 </div>
 
-<script src="js/script.js">
-  
-</script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
