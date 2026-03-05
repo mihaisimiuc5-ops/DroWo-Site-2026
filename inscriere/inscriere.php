@@ -62,6 +62,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formular Înscriere Drone WorkShop 2026</title>
+    <meta name="author" content="Asociația EuroAvia București">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="application-name" content="Drone WorkShop 2026">
+    <meta name="apple-mobile-web-app-title" content="Drone WorkShop 2026">
+    <meta property="og:site_name" content="Drone WorkShop 2026">
+    <meta property="og:title" content="Formular de inscriere - Drone WorkShop 2026">
+    <meta property="og:description" content=".">
+    <meta property="og:image" content="https://graurii.ro/images-share/principal.jpg">
+    <meta property="og:locale" content="ro_RO">
+    <meta http-equiv="content-language" content="ro">
+    <meta property="og:type" content="Educative event">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
